@@ -1,0 +1,6 @@
+package vision.salient.trisolaran.model.webservice.colors.dto
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ColorDto(val colorName: String, val hexValue: String)

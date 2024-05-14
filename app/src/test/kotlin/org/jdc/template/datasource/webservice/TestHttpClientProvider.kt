@@ -8,8 +8,8 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.request.header
 import io.ktor.http.HttpHeaders
-import org.jdc.template.model.webservice.KtorClientDefaults.defaultSetup
-import org.jdc.template.model.webservice.ResponseTimePlugin
+import vision.salient.trisolaran.model.webservice.KtorClientDefaults.defaultSetup
+import vision.salient.trisolaran.model.webservice.ResponseTimePlugin
 
 object TestHttpClientProvider {
     fun getTestClient(

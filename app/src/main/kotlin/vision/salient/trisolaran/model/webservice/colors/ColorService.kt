@@ -13,7 +13,6 @@ import io.ktor.http.isSuccess
 import io.ktor.resources.Resource
 import okio.FileSystem
 import okio.Path
-import org.jdc.template.model.webservice.colors.ColorsResource
 import vision.salient.trisolaran.model.webservice.colors.dto.ColorDto
 import vision.salient.trisolaran.model.webservice.colors.dto.ColorsDto
 import vision.salient.trisolaran.model.webservice.colors.dto.ErrorDto

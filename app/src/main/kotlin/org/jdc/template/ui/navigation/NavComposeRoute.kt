@@ -12,6 +12,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import vision.salient.trisolaran.ui.navigation.NavRoute
+import vision.salient.trisolaran.ui.navigation.NavRouteDefinition
 
 abstract class NavComposeRoute {
     /**

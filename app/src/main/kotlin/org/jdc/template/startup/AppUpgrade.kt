@@ -4,7 +4,7 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import org.jdc.template.BuildConfig
-import org.jdc.template.inject.IoDispatcher
+import vision.salient.trisolaran.inject.IoDispatcher
 import org.jdc.template.model.repository.SettingsRepository
 import javax.inject.Inject
 

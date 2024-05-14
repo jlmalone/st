@@ -6,20 +6,19 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import vision.salient.trisolaran.model.domain.inline.IndividualId
 import vision.salient.trisolaran.ui.navigation.NavComposeRoute
-import org.jdc.template.ui.navigation.NavRoute
-import org.jdc.template.ui.navigation.NavRouteDefinition
-import vision.salient.trisolaran.ui.navigation.RouteUtil
-import org.jdc.template.ui.navigation.asNavRoute
-import org.jdc.template.ui.navigation.asNavRouteDefinition
+import vision.salient.trisolaran.ui.navigation.NavRoute
+import vision.salient.trisolaran.ui.navigation.NavRouteDefinition
+import vision.salient.trisolaran.ui.navigation.asNavRoute
+import vision.salient.trisolaran.ui.navigation.asNavRouteDefinition
 import org.jdc.template.ux.individualedit.IndividualEditRoute
 import vision.salient.trisolaran.util.ext.getIndividualId
 
 object IndividualEditRoute : NavComposeRoute() {
     private const val ROUTE_BASE = "individualEdit"
-    override val routeDefinition: NavRouteDefinition = "$ROUTE_BASE?${RouteUtil.defineOptionalArgs(Arg.INDIVIDUAL_ID)}".asNavRouteDefinition()
+    override val routeDefinition: NavRouteDefinition = vision.salient.trisolaran.ui.navigation.asNavRouteDefinition()
 
     fun createRoute(individualId: IndividualId? = null): NavRoute {
-        return "$ROUTE_BASE?${RouteUtil.optionalArgs(mapOf(Arg.INDIVIDUAL_ID to individualId?.value))}".asNavRoute()
+        return vision.salient.trisolaran.ui.navigation.asNavRoute()
     }
 
     override fun getArguments(): List<NamedNavArgument> {

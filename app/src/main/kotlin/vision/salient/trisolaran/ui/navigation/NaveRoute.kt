@@ -1,6 +1,8 @@
-package org.jdc.template.ui.navigation
+package vision.salient.trisolaran.ui.navigation
 
 import androidx.navigation.NavController
+import org.jdc.template.ui.navigation.NavRoute
+import org.jdc.template.ui.navigation.NavRouteDefinition
 
 @JvmInline
 value class NavRoute(val value: String)

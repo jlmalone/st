@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
-import org.jdc.template.inject.DefaultDispatcher
+import vision.salient.trisolaran.inject.DefaultDispatcher
 import org.jdc.template.model.domain.Household
 import org.jdc.template.model.domain.Individual
 import org.jdc.template.model.domain.inline.FirstName

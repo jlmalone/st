@@ -14,7 +14,7 @@ import kotlinx.datetime.LocalTime
 import org.dbtools.android.room.jdbc.JdbcSQLiteOpenHelperFactory
 import org.jdc.template.TestFilesystem
 import org.jdc.template.inject.CommonTestModule
-import org.jdc.template.inject.CoroutinesModule
+import vision.salient.trisolaran.inject.CoroutinesModule
 import org.jdc.template.model.datastore.UserPreferenceDataSource
 import org.jdc.template.model.db.main.MainDatabase
 import org.jdc.template.model.db.main.MainDatabaseWrapper

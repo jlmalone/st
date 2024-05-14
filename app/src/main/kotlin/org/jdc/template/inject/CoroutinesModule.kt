@@ -8,6 +8,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import vision.salient.trisolaran.inject.ApplicationScope
+import vision.salient.trisolaran.inject.DefaultDispatcher
+import vision.salient.trisolaran.inject.IoDispatcher
+import vision.salient.trisolaran.inject.MainDispatcher
 import javax.inject.Qualifier
 import javax.inject.Singleton
 

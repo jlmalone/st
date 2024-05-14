@@ -1,4 +1,4 @@
-package org.jdc.template.model.webservice
+package vision.salient.trisolaran.model.webservice
 
 import okhttp3.Interceptor
 import okhttp3.Response

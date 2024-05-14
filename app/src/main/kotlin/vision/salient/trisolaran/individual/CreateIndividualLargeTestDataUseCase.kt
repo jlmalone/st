@@ -4,19 +4,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
-import org.jdc.template.inject.DefaultDispatcher
+import org.jdc.template.model.repository.IndividualRepository
 import vision.salient.trisolaran.model.domain.Individual
 import vision.salient.trisolaran.model.domain.inline.FirstName
 import vision.salient.trisolaran.model.domain.inline.LastName
 import vision.salient.trisolaran.model.domain.inline.Phone
-import org.jdc.template.model.domain.type.IndividualType
-import org.jdc.template.model.repository.IndividualRepository
 import javax.inject.Inject
 
 class CreateIndividualLargeTestDataUseCase
 @Inject constructor(
-    private val individualRepository: IndividualRepository,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+        private val individualRepository: IndividualRepository,
+        @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke() = withContext(defaultDispatcher) {
         // clear any existing items

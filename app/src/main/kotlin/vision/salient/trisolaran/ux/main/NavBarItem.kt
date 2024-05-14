@@ -8,15 +8,15 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.jdc.template.R
 import vision.salient.trisolaran.ui.compose.icons.google.outlined.People
-import org.jdc.template.ui.navigation.NavRoute
+import vision.salient.trisolaran.ui.navigation.NavRoute
 import vision.salient.trisolaran.ux.about.AboutRoute
 import vision.salient.trisolaran.ux.directory.DirectoryRoute
 
 enum class NavBarItem(
-    val unselectedImageVector: ImageVector,
-    val selectedImageVector: ImageVector,
-    val route: NavRoute,
-    @StringRes val textResId: Int? = null,
+        val unselectedImageVector: ImageVector,
+        val selectedImageVector: ImageVector,
+        val route: NavRoute,
+        @StringRes val textResId: Int? = null,
 ) {
     PEOPLE(vision.salient.trisolaran.ui.compose.icons.google.outlined.People, Icons.Filled.People, DirectoryRoute.createRoute(), R.string.people),
     ABOUT(Icons.Outlined.Info, Icons.Filled.Info, AboutRoute.createRoute(), R.string.about);

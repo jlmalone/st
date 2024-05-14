@@ -1,4 +1,4 @@
-package org.jdc.template.inject
+package vision.salient.trisolaran.inject
 
 import dagger.Module
 import dagger.Provides
@@ -8,6 +8,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import org.jdc.template.inject.ApplicationScope
+import org.jdc.template.inject.DefaultDispatcher
+import org.jdc.template.inject.IoDispatcher
+import org.jdc.template.inject.MainDispatcher
 import javax.inject.Qualifier
 import javax.inject.Singleton
 

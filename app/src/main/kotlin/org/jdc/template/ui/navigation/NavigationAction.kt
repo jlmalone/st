@@ -8,6 +8,8 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import co.touchlab.kermit.Logger
+import vision.salient.trisolaran.ui.navigation.NavRoute
+import vision.salient.trisolaran.ui.navigation.NavRouteDefinition
 
 sealed interface NavigationActionRoute : NavigationAction {
     /**
@@ -110,9 +112,9 @@ sealed interface NavigationAction {
     }
 
     data class PopWithResult(
-        private val resultValues: List<PopResultKeyValue>,
-        private val popToRouteDefinition: NavRouteDefinition? = null,
-        private val inclusive: Boolean = false,
+            private val resultValues: List<PopResultKeyValue>,
+            private val popToRouteDefinition: NavRouteDefinition? = null,
+            private val inclusive: Boolean = false,
     ) : NavigationActionRoute {
         override fun navigate(navController: NavController, resetNavigate: (NavigationAction) -> Unit): Boolean {
             val destinationNavBackStackEntry = if (popToRouteDefinition != null) {

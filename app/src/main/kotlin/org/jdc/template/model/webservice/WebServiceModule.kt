@@ -16,7 +16,8 @@ import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.jdc.template.BuildConfig
-import org.jdc.template.model.webservice.KtorClientDefaults.defaultSetup
+import vision.salient.trisolaran.model.webservice.KtorClientDefaults.defaultSetup
+import vision.salient.trisolaran.model.webservice.MyAccountInterceptor
 import java.io.UnsupportedEncodingException
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
@@ -88,7 +89,7 @@ class WebServiceModule {
             install(Logging) {
                 defaultSetup()
             }
-            install(ResponseTimePlugin)
+            install(vision.salient.trisolaran.model.webservice.ResponseTimePlugin)
             install(Resources)
             install(ContentNegotiation) {
                 defaultSetup(allowAnyContentType = true)
@@ -96,7 +97,7 @@ class WebServiceModule {
 
             defaultRequest {
                 url("https://raw.githubusercontent.com/jeffdcamp/android-template/33017aa38f59b3ff728a26c1ee350e58c8bb9647/src/test/")
-                acceptLanguage(application)
+                vision.salient.trisolaran.model.webservice.acceptLanguage(application)
             }
 //            install(HttpCache) // Talk about cache
         }

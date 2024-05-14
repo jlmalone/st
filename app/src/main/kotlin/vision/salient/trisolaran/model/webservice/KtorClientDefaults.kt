@@ -1,4 +1,4 @@
-package org.jdc.template.model.webservice
+package vision.salient.trisolaran.model.webservice
 
 import android.app.Application
 import io.ktor.client.plugins.DefaultRequest
@@ -20,7 +20,7 @@ import kotlinx.serialization.json.Json
  */
 object KtorClientDefaults {
     fun LoggingConfig.defaultSetup() {
-        logger = KermitKtorLogger
+        logger = org.jdc.template.model.webservice.KermitKtorLogger
         level = LogLevel.INFO
         sanitizeHeader { header -> header == HttpHeaders.Authorization }
     }

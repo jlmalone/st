@@ -17,6 +17,7 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import vision.salient.trisolaran.ui.navigation.NavRoute
 import vision.salient.trisolaran.util.log.CrashLogException
 
 /**
@@ -173,7 +174,7 @@ interface NavBarConfig<T : Enum<T>> {
 }
 
 class DefaultNavBarConfig<T : Enum<T>>(
-    private val navBarItemRouteMap: Map<T, NavRoute>,
+        private val navBarItemRouteMap: Map<T, NavRoute>,
 ) : NavBarConfig<T> {
     override fun getRouteByNavItem(navBarItem: T): NavRoute? = navBarItemRouteMap[navBarItem]
 }

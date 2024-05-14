@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.jdc.template.util.log.CrashLogException
+import vision.salient.trisolaran.ui.navigation.NavRoute
 
 /**
  * Used for MainScreen ViewModels that that have bottom NavigationBars or NavigationRails
@@ -173,7 +174,7 @@ interface NavBarConfig<T : Enum<T>> {
 }
 
 class DefaultNavBarConfig<T : Enum<T>>(
-    private val navBarItemRouteMap: Map<T, NavRoute>,
+        private val navBarItemRouteMap: Map<T, NavRoute>,
 ) : NavBarConfig<T> {
     override fun getRouteByNavItem(navBarItem: T): NavRoute? = navBarItemRouteMap[navBarItem]
 }

@@ -16,7 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jdc.template.BuildConfig
 import org.jdc.template.SuppressCoverage
-import org.jdc.template.inject.ApplicationScope
+import vision.salient.trisolaran.inject.ApplicationScope
 import vision.salient.trisolaran.model.repository.SettingsRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

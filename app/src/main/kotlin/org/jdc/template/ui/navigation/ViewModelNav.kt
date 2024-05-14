@@ -13,6 +13,8 @@ import androidx.navigation.navOptions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import vision.salient.trisolaran.ui.navigation.NavRoute
+import vision.salient.trisolaran.ui.navigation.NavRouteDefinition
 
 /**
  * Used for typical ViewModels that have navigation

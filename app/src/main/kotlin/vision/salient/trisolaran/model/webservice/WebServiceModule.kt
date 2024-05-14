@@ -1,4 +1,4 @@
-package org.jdc.template.model.webservice
+package vision.salient.trisolaran.model.webservice
 
 import android.app.Application
 import android.os.Build
@@ -16,7 +16,7 @@ import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.jdc.template.BuildConfig
-import org.jdc.template.model.webservice.KtorClientDefaults.defaultSetup
+import vision.salient.trisolaran.model.webservice.KtorClientDefaults.defaultSetup
 import java.io.UnsupportedEncodingException
 import java.util.concurrent.TimeUnit
 import javax.inject.Named

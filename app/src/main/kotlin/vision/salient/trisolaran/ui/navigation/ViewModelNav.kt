@@ -13,11 +13,7 @@ import androidx.navigation.navOptions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.jdc.template.ui.navigation.NavRoute
-import org.jdc.template.ui.navigation.NavRouteDefinition
-import org.jdc.template.ui.navigation.NavigationAction
-import org.jdc.template.ui.navigation.PopResultKeyValue
-import org.jdc.template.ui.navigation.ViewModelNav
+
 
 /**
  * Used for typical ViewModels that have navigation

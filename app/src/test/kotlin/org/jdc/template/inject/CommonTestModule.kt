@@ -17,8 +17,8 @@ import io.mockk.mockk
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import org.jdc.template.TestFilesystem
-import org.jdc.template.model.webservice.KtorClientDefaults.defaultSetup
-import org.jdc.template.model.webservice.ResponseTimePlugin
+import vision.salient.trisolaran.model.webservice.KtorClientDefaults.defaultSetup
+import vision.salient.trisolaran.model.webservice.ResponseTimePlugin
 import org.jdc.template.model.webservice.colors.ColorService
 import java.io.File
 import java.util.concurrent.TimeUnit

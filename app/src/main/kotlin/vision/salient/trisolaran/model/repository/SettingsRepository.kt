@@ -4,7 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.jdc.template.inject.ApplicationScope
 import vision.salient.trisolaran.model.domain.type.DisplayThemeType
 import vision.salient.trisolaran.model.datastore.DevicePreferenceDataSource
 import vision.salient.trisolaran.model.datastore.UserPreferenceDataSource

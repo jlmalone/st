@@ -13,8 +13,6 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.jdc.template.ui.navigation.NavComposeRoute
-import org.jdc.template.ui.navigation.NavRoute
-import org.jdc.template.ui.navigation.NavRouteDefinition
 
 abstract class NavComposeRoute {
     /**

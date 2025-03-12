@@ -5,6 +5,7 @@ import java.util.Date
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.gms)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.firebase.appdistribution)
@@ -18,6 +19,7 @@ plugins {
     alias(libs.plugins.playPublisher)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.licenseManager)
+    alias(libs.plugins.dependencyAnalysis)
     id("com.spotify.ruler")
 }
 
@@ -88,10 +90,6 @@ android {
 
     androidResources {
         generateLocaleConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
 
     lint {
@@ -220,15 +218,11 @@ dependencies {
     // Compose
     implementation(libs.compose.ui)
     debugImplementation(libs.compose.ui.tooling.preview)
-//    debugImplementation(libs.compose.ui.tooling)
     implementation(libs.compose.material3)
     implementation(libs.compose.material3.adaptive)
     implementation(libs.compose.material3.adaptive.navigation)
     implementation(libs.compose.material3.windowsize)
     implementation(libs.compose.material.iconsext)
-
-    // Play Service
-    implementation(libs.google.play.core)
 
     // Firebase
     implementation(platform(libs.google.firebase.bom))
@@ -242,7 +236,6 @@ dependencies {
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.kotlin.datetime)
     implementation(libs.okio)
-    implementation(libs.okio.assetfilesystem)
 
     // Inject
     implementation(libs.google.hilt.library)
@@ -254,7 +247,7 @@ dependencies {
     // Android Architecture Components
     implementation(libs.androidx.lifecycle.compose)
     implementation(libs.androidx.lifecycle.process)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
 
     // Navigation
@@ -267,8 +260,9 @@ dependencies {
     implementation(libs.workmanagertools)
 
     // Database
-    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.paging)
     ksp(libs.androidx.room.compiler)
     implementation(libs.dbtools.room)
 
@@ -278,17 +272,14 @@ dependencies {
 
     // Network
     implementation(libs.ktor.client.core)
-//    implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.resources)
 
-    // Network
-    implementation(platform(libs.okhttp.bom))
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.loggingInterceptor)
+    // Paging
+    implementation(libs.androidx.paging.compose)
 
     // Logging
     implementation(libs.kermit)
@@ -306,6 +297,7 @@ dependencies {
     testImplementation(libs.mockK)
     testImplementation(libs.ktor.client.mock)
     testImplementation(libs.assertk)
+    testImplementation(libs.konsist)
     testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.dbtools.roomJdbc)
     testImplementation(libs.turbine)
@@ -323,50 +315,52 @@ tasks.withType<Test> {
 // ./gradlew koverHtmlReportDebug
 // ./gradlew koverXmlReportDebug
 // ./gradlew koverVerifyDebug
-koverReport {
-    filters {
-        excludes {
-            packages(
-                "*hilt_aggregated_deps*",
-                "*codegen*",
+kover {
+    reports {
+        filters {
+            excludes {
+                packages(
+                    "*hilt_aggregated_deps*",
+                    "*codegen*",
 
-                // App Specific
-                "org.jdc.template.ui",
-            )
+                    // App Specific
+                    "org.jdc.template.ui",
+                )
 
-            classes(
-                "*Fragment",
-                "*Fragment\$*",
-                "*Activity",
-                "*Activity\$*",
-                "*.databinding.*",
-                "*.BuildConfig",
-                "*Factory",
-                "*_HiltModules*",
-                "*_Impl*",
-                "*ComposableSingletons*",
-                "*Hilt*",
-                "*Initializer*",
+                classes(
+                    "*Fragment",
+                    "*Fragment\$*",
+                    "*Activity",
+                    "*Activity\$*",
+                    "*.databinding.*",
+                    "*.BuildConfig",
+                    "*Factory",
+                    "*_HiltModules*",
+                    "*_Impl*",
+                    "*ComposableSingletons*",
+                    "*Hilt*",
+                    "*Initializer*",
 
-                // App Specific
-                "*MainAppScaffoldWithNavBarKt*"
-            )
+                    // App Specific
+                    "*MainAppScaffoldWithNavBarKt*"
+                )
 
-            annotatedBy(
-                "*Composable*",
-                "*HiltAndroidApp*",
-                "*HiltViewModel*",
-                "*HiltWorker*",
-                "*AndroidEntryPoint*",
-                "*Module*",
-                "*SuppressCoverage*",
-            )
+                annotatedBy(
+                    "*Composable*",
+                    "*HiltAndroidApp*",
+                    "*HiltViewModel*",
+                    "*HiltWorker*",
+                    "*AndroidEntryPoint*",
+                    "*Module*",
+                    "*SuppressCoverage*",
+                )
+            }
         }
-    }
 
-    verify {
-        rule {
-            minBound(25) // minimum percent coverage without failing build (Line percent)
+        verify {
+            rule {
+                minBound(25) // minimum percent coverage without failing build (Line percent)
+            }
         }
     }
 }

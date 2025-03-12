@@ -50,7 +50,7 @@ fun IndividualEditScreen(
         onNavigationClick = { navController.popBackStack() },
         hideNavigation = true
     ) {
-        IndividualEditFields(viewModel.uiState)
+        IndividualEditContent(viewModel.uiState)
     }
 
     HandleDialogUiState(uiState.dialogUiStateFlow)
@@ -59,7 +59,7 @@ fun IndividualEditScreen(
 }
 
 @Composable
-fun IndividualEditFields(
+fun IndividualEditContent(
     uiState: IndividualEditUiState
 ) {
     Column(
@@ -82,11 +82,11 @@ fun IndividualEditFields(
         DateClickableTextField(
             stringResource(R.string.birth_date),
             uiState.birthDateFlow,
-            uiState.birthDateClicked,
+            uiState.birthDateClick,
             fieldModifier.testTag(IndividualEditScreenFields.BIRTH_DATE.name),
             uiState.birthDateErrorFlow
         )
-        TimeClickableTextField(stringResource(R.string.alarm_time), uiState.alarmTimeFlow, uiState.alarmTimeClicked, fieldModifier.testTag(IndividualEditScreenFields.ALARM_TIME.name))
+        TimeClickableTextField(stringResource(R.string.alarm_time), uiState.alarmTimeFlow, uiState.alarmTimeClick, fieldModifier.testTag(IndividualEditScreenFields.ALARM_TIME.name))
 
         DropdownMenuBoxField(
             label = stringResource(R.string.individual_type),
@@ -124,7 +124,7 @@ private fun Preview() {
 
     AppTheme {
         Surface {
-            IndividualEditFields(uiState)
+            IndividualEditContent(uiState)
         }
     }
 }

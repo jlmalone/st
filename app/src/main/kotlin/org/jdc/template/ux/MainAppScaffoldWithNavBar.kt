@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.dropUnlessResumed
 import org.jdc.template.R
 import org.jdc.template.ui.compose.util.WindowSize
 import org.jdc.template.ui.compose.util.rememberWindowSize
@@ -98,7 +99,7 @@ fun MainAppScaffoldWithNavBar(
                 {}
             } else {
                 {
-                    IconButton(onClick = { onNavigationClick?.invoke() }) {
+                    IconButton(onClick = dropUnlessResumed { onNavigationClick?.invoke() }) {
                         Icon(
                             imageVector = navigationIcon,
                             contentDescription = stringResource(id = R.string.back),
@@ -112,51 +113,35 @@ fun MainAppScaffoldWithNavBar(
         )
     }
 
-    when {
-        hideNavigation -> {
-            AppScaffold(
-                topAppBar = topAppBar,
-                floatingActionButton = floatingActionButton,
-                floatingActionButtonPosition = floatingActionButtonPosition,
-                contentWindowInsets = contentWindowInsets,
-                modifier = modifier,
-                scrollBehavior = scrollBehavior,
-                content = content
-            )
-        }
+    NavigationSuiteScaffold(
+        layoutType = if (hideNavigation) NavigationSuiteType.None else getNavigationSuiteType(windowSize.toDpSize()),
+        navigationSuiteItems = {
+            NavBarItem.entries.forEach { navBarItem ->
+                val selected = selectedBarItem == navBarItem
+                val imageVector = if (selected) navBarItem.selectedImageVector else navBarItem.unselectedImageVector
 
-        else -> {
-            NavigationSuiteScaffold(
-                layoutType = getNavigationSuiteType(windowSize.toDpSize()),
-                navigationSuiteItems = {
-                    NavBarItem.entries.forEach { navBarItem ->
-                        val selected = selectedBarItem == navBarItem
-                        val imageVector = if (selected) navBarItem.selectedImageVector else navBarItem.unselectedImageVector
-
-                        item(
-                            selected = selected,
-                            icon = { Icon(imageVector = imageVector, contentDescription = null) },
-                            label = if (navBarItem.textResId != null) {
-                                { Text(stringResource(navBarItem.textResId), maxLines = 1) }
-                            } else {
-                                null
-                            },
-                            onClick = { viewModel.onNavBarItemSelected(navBarItem) }
-                        )
-                    }
-                },
-            ) {
-                AppScaffold(
-                    topAppBar = topAppBar,
-                    floatingActionButton = floatingActionButton,
-                    floatingActionButtonPosition = floatingActionButtonPosition,
-                    contentWindowInsets = contentWindowInsets,
-                    modifier = modifier,
-                    scrollBehavior = scrollBehavior,
-                    content = content
+                item(
+                    selected = selected,
+                    icon = { Icon(imageVector = imageVector, contentDescription = null) },
+                    label = if (navBarItem.textResId != null) {
+                        { Text(stringResource(navBarItem.textResId), maxLines = 1) }
+                    } else {
+                        null
+                    },
+                    onClick = { viewModel.onNavBarItemSelected(navBarItem) }
                 )
             }
-        }
+        },
+    ) {
+        AppScaffold(
+            topAppBar = topAppBar,
+            floatingActionButton = floatingActionButton,
+            floatingActionButtonPosition = floatingActionButtonPosition,
+            contentWindowInsets = contentWindowInsets,
+            modifier = modifier,
+            scrollBehavior = scrollBehavior,
+            content = content
+        )
     }
 }
 

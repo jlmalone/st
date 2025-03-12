@@ -1,5 +1,8 @@
 package org.jdc.template.ui.compose.dialog
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.AlertDialog
@@ -9,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import org.jdc.template.ui.compose.PreviewDefault
@@ -20,9 +24,9 @@ fun MessageDialog(
     text: String? = null,
     icon: @Composable (() -> Unit)? = null,
     confirmButtonText: @Composable () -> String? = { stringResource(android.R.string.ok) },
-    onConfirmButtonClicked: (() -> Unit)? = null,
+    onConfirmButtonClick: (() -> Unit)? = null,
     dismissButtonText: @Composable () -> String? = { stringResource(android.R.string.cancel) },
-    onDismissButtonClicked: (() -> Unit)? = null,
+    onDismissButtonClick: (() -> Unit)? = null,
     tonalElevation: Dp = AlertDialogDefaults.TonalElevation
 ) {
     require(title != null || text != null) { "Title or Text is required (if visible)" }
@@ -35,17 +39,23 @@ fun MessageDialog(
             null
         },
         text = if (text != null) {
-            { Text(text, style = MaterialTheme.typography.bodyMedium) }
+            {
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
+                    Text(text, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
         } else {
             null
         },
         icon = icon,
         confirmButton = {
             val confirmButtonTextString = confirmButtonText()
-            if (onConfirmButtonClicked != null && confirmButtonTextString != null) {
+            if (onConfirmButtonClick != null && confirmButtonTextString != null) {
                 TextButton(
                     onClick = {
-                        onConfirmButtonClicked()
+                        onConfirmButtonClick()
                     }
                 ) {
                     Text(confirmButtonTextString)
@@ -54,10 +64,10 @@ fun MessageDialog(
         },
         dismissButton = {
             val dismissButtonTextString = dismissButtonText()
-            if (onDismissButtonClicked != null && dismissButtonTextString != null) {
+            if (onDismissButtonClick != null && dismissButtonTextString != null) {
                 TextButton(
                     onClick = {
-                        onDismissButtonClicked()
+                        onDismissButtonClick()
                     }
                 ) {
                     Text(dismissButtonTextString)
@@ -78,9 +88,9 @@ fun MessageDialog(
         text = dialogUiState.text?.invoke(),
         icon = dialogUiState.icon,
         confirmButtonText = dialogUiState.confirmButtonText,
-        onConfirmButtonClicked = if (dialogUiState.onConfirm != null) { { dialogUiState.onConfirm.invoke(Unit) } } else null,
+        onConfirmButtonClick = if (dialogUiState.onConfirm != null) { { dialogUiState.onConfirm.invoke(Unit) } } else null,
         dismissButtonText = dialogUiState.dismissButtonText,
-        onDismissButtonClicked = dialogUiState.onDismiss,
+        onDismissButtonClick = dialogUiState.onDismiss,
     )
 }
 
@@ -103,8 +113,8 @@ private fun PreviewMessageDialog() {
             title = "Title",
             text = "This is the content that goes in the text",
             onDismissRequest = { },
-            onConfirmButtonClicked = { },
-            onDismissButtonClicked = { }
+            onConfirmButtonClick = { },
+            onDismissButtonClick = { }
         )
     }
 }
@@ -118,8 +128,8 @@ private fun PreviewMessageDialogWithIcon() {
             text = "This is the content that goes in the text",
             icon = { Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null) },
             onDismissRequest = { },
-            onConfirmButtonClicked = { },
-            onDismissButtonClicked = { }
+            onConfirmButtonClick = { },
+            onDismissButtonClick = { }
         )
     }
 }

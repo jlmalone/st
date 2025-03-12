@@ -10,12 +10,14 @@ data class AboutUiState(
     // Events
     val testQueryWebServiceCall: () -> Unit = {},
     val testFullUrlQueryWebServiceCall: () -> Unit = {},
+    val testCachedUrlQueryWebServiceCall: () -> Unit = {},
     val testSaveQueryWebServiceCall: () -> Unit = {},
     val workManagerSimpleTest: () -> Unit = {},
     val workManagerSyncTest: () -> Unit = {},
     val testTableChange: () -> Unit = {},
-    val licensesClicked: () -> Unit = {},
+    val licensesClick: () -> Unit = {},
     val createSampleData: () -> Unit = {},
     val createLargeSampleData: () -> Unit = {},
-    val m3TypographyClicked: () -> Unit = {},
+    val m3TypographyClick: () -> Unit = {},
+    val onChatClick: () -> Unit = {},
 )

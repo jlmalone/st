@@ -9,27 +9,30 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import okio.FileSystem
 import okio.Path.Companion.toOkioPath
-import org.jdc.template.domain.individual.CreateIndividualLargeTestDataUseCase
-import org.jdc.template.domain.individual.CreateIndividualTestDataUseCase
+import org.jdc.template.domain.individual.usecase.CreateIndividualLargeTestDataUseCase
+import org.jdc.template.domain.individual.usecase.CreateIndividualTestDataUseCase
 import org.jdc.template.model.config.RemoteConfig
+import org.jdc.template.model.datastore.DevicePreferenceDataSource
 import org.jdc.template.model.domain.inline.FirstName
 import org.jdc.template.model.repository.IndividualRepository
 import org.jdc.template.model.webservice.colors.ColorService
 import org.jdc.template.model.webservice.colors.dto.ColorsDto
-import org.jdc.template.ui.navigation.ViewModelNav
-import org.jdc.template.ui.navigation.ViewModelNavImpl
-import org.jdc.template.util.ext.ApiResponse
-import org.jdc.template.util.ext.message
-import org.jdc.template.util.ext.onError
-import org.jdc.template.util.ext.onException
-import org.jdc.template.util.ext.onFailure
-import org.jdc.template.util.ext.onSuccess
+import org.jdc.template.ui.navigation.ViewModelNavigation
+import org.jdc.template.ui.navigation.ViewModelNavigationImpl
 import org.jdc.template.util.ext.readText
+import org.jdc.template.util.network.ApiResponse
+import org.jdc.template.util.network.message
+import org.jdc.template.util.network.onError
+import org.jdc.template.util.network.onException
+import org.jdc.template.util.network.onFailure
+import org.jdc.template.util.network.onSuccess
 import org.jdc.template.ux.about.typography.TypographyRoute
 import org.jdc.template.ux.acknowledgement.AcknowledgmentsRoute
+import org.jdc.template.ux.chats.ChatsRoute
 import org.jdc.template.work.WorkScheduler
 import javax.inject.Inject
 
@@ -41,10 +44,11 @@ class AboutViewModel
     private val colorService: ColorService,
     private val workScheduler: WorkScheduler,
     private val remoteConfig: RemoteConfig,
+    private val devicePreferenceDataSource: DevicePreferenceDataSource,
     private val createIndividualTestDataUseCase: CreateIndividualTestDataUseCase,
     private val createIndividualLargeTestDataUseCase: CreateIndividualLargeTestDataUseCase,
     private val fileSystem: FileSystem
-) : ViewModel(), ViewModelNav by ViewModelNavImpl() {
+) : ViewModel(), ViewModelNavigation by ViewModelNavigationImpl() {
 
     private val resetServiceEnabledFlow: StateFlow<Boolean> = MutableStateFlow(remoteConfig.isColorServiceEnabled()).asStateFlow()
 
@@ -52,14 +56,16 @@ class AboutViewModel
         resetServiceEnabledFlow = resetServiceEnabledFlow,
         testQueryWebServiceCall = { testQueryWebServiceCall() },
         testFullUrlQueryWebServiceCall = { testFullUrlQueryWebServiceCall() },
+        testCachedUrlQueryWebServiceCall = { testCachedUrlQueryWebServiceCall() },
         testSaveQueryWebServiceCall = { testSaveQueryWebServiceCall() },
         workManagerSimpleTest = { workManagerSimpleTest() },
         workManagerSyncTest = { workManagerSyncTest() },
         testTableChange = { testTableChange() },
-        licensesClicked = { navigate(AcknowledgmentsRoute.createRoute()) },
+        licensesClick = { navigate(AcknowledgmentsRoute) },
         createSampleData = { createSampleData() },
         createLargeSampleData = { createLargeSampleData() },
-        m3TypographyClicked = { navigate(TypographyRoute.createRoute()) }
+        m3TypographyClick = { navigate(TypographyRoute) },
+        onChatClick = { navigate(ChatsRoute) }
     )
 
     private fun testQueryWebServiceCall() = viewModelScope.launch {
@@ -83,6 +89,24 @@ class AboutViewModel
         processWebServiceResponse(response)
     }
 
+    private fun testCachedUrlQueryWebServiceCall() = viewModelScope.launch {
+        Logger.i { "Cached URL Call..." }
+
+        val etag = devicePreferenceDataSource.colorsETagPref.flow.firstOrNull()
+
+        colorService.getColorsCached(etag)
+            .onSuccess {
+                this.data?.colors?.forEach {
+                    Logger.i { "Result: ${it.colorName}" }
+                }
+
+                this.etag?.let { devicePreferenceDataSource.colorsETagPref.setValue(it) }
+            }
+            .onException {
+                Logger.e(this.throwable) { "Failed to fetch Colors" }
+            }
+    }
+
     private fun testSaveQueryWebServiceCall() = viewModelScope.launch {
         val outputFile = application.filesDir.toOkioPath() / "colors.json"
         colorService.getColorsToFile(fileSystem, outputFile)
@@ -90,7 +114,7 @@ class AboutViewModel
         Logger.i { "Downloaded file contents:\n ${fileSystem.readText(outputFile)}" }
     }
 
-    private fun processWebServiceResponse(response: ApiResponse<ColorsDto, Unit>) {
+    private fun processWebServiceResponse(response: ApiResponse<out ColorsDto, out Unit>) {
         response.onSuccess {
             data.colors.forEach {
                 Logger.i { "Result: ${it.colorName}" }
@@ -104,7 +128,7 @@ class AboutViewModel
         }
     }
 
-    private fun processWebServiceResponse2(response: ApiResponse<ColorsDto, Unit>) {
+    private fun processWebServiceResponse2(response: ApiResponse<out ColorsDto, out Unit>) {
         response.onSuccess {
             data.colors.forEach {
                 Logger.i { "Result: ${it.colorName}" }
